@@ -104,9 +104,9 @@ class CornSauce(Sauses):
         super().__init__(CornSauce.name,CornSauce.cost)
 
     
-# Choose Screen
+# Choice Screen
 
-def secim():    
+def choice():    
     pizza=input("Pizza secimi yapiniz: ")
     while pizza not in ["1","2","3","4"]:
         pizza=input("Lütfen 1 ile 4 arasinda bir değer giriniz: ")
@@ -148,16 +148,11 @@ def secim():
     total_cost=pizza.cost+sause.cost
 
 
+# Valid Control
 
-def main():
-    with open(r"C:\Users\Nevra\Desktop\menu.txt","r") as menu:
-        print(menu.read())
-    
-    secim()
-    
-    print("SEPET İÇERİĞİ\n{}: {} tl\nİlave {}: {} tl\nToplam Tutar: {} tl".format(pizza_name, pizza_cost, sause_name, sause_cost, total_cost))
-    print("Lütfen sipariş oluşturmak için bilgilerinizi giriniz.")
-    
+def control():
+
+    global customer_name,custumer_id,card_num,card_password
 
     customer_name=input("İsminiz: ")
     while customer_name.isdigit():
@@ -168,21 +163,36 @@ def main():
         custumer_id=input("Lütfen 11 haneli TC Kimlik numaranızı giriniz: ")
 
     card_num=input("Kredi karti numaraninizi giriniz: ")
-    card_password=input("Kredi karti şifrenizi giriniz: ")
+    regex=r"\d{4}\s\d{4}\s\d{4}\s\d{4}"
+    while not re.search(regex,card_num):
+        card_num=input("Lütfen 16 haneli kredi kart numaranızı aralarında boşluk bırakacak şekilde giriniz: ")
 
+    card_password=input("Kredi kartı şifrenizi giriniz: ")
     while (card_password.isdigit() is False) or len(card_password)!=4:
-        card_password=input("Lütfen kart şifrenizi giriniz: ")
+        card_password=input("Lütfen 4 haneli kart şifrenizi giriniz: ")
 
+
+def main():
+    with open(r"C:\Users\Nevra\Desktop\menu.txt","r") as menu:
+        print(menu.read())
+    
+    choice()
+    
+    print("SEPET İÇERİĞİ\n{}: {} tl\nİlave {}: {} tl\nToplam Tutar: {} tl".format(pizza_name, pizza_cost, sause_name, sause_cost, total_cost))
+    print("Lütfen sipariş oluşturmak için bilgilerinizi giriniz.")
+
+    control()
     
     time=datetime.now()
-
     print("SIPARISINIZ OLUSTURULMUSTUR! SIPARIS SAATI: {}".format(time))
 
-    with open(r"C:\Users\Nevra\Desktop\Orders_Database.csv",'a',newline='') as database:
+    with open(r"C:\Users\Nevra\Desktop\Order_Database.csv",'a',newline='') as database:
         data=[pizza_name,pizza_description,pizza_cost,sause_name,sause_cost,total_cost,customer_name,custumer_id,card_num,card_password,time]
         
         writer = csv.writer(database)
         writer.writerow(data)
+
+
 
 if __name__ == "__main__":
     main()
