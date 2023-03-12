@@ -51,7 +51,6 @@ class SadePizza(Pizza):
     def __init__(self):
         super().__init__(SadePizza.name,SadePizza.desc,SadePizza.cost)
 
-
 # Sause Class
 
 class Sauses:
@@ -103,7 +102,6 @@ class CornSauce(Sauses):
     def __init__(self):
         super().__init__(CornSauce.name,CornSauce.cost)
 
-    
 # Choice Screen
 
 def choice():    
@@ -137,7 +135,6 @@ def choice():
     else:
         sause=CornSauce()
 
-
     global pizza_name, pizza_description, pizza_cost, sause_name, sause_cost, total_cost
 
     pizza_name=pizza.name
@@ -147,8 +144,7 @@ def choice():
     sause_cost=sause.cost
     total_cost=pizza.cost+sause.cost
 
-
-# Valid Control
+# Validation Control
 
 def control():
 
@@ -171,7 +167,6 @@ def control():
     while (card_password.isdigit() is False) or len(card_password)!=4:
         card_password=input("Lütfen 4 haneli kart şifrenizi giriniz: ")
 
-
 def main():
     with open(r"C:\Users\Nevra\Desktop\menu.txt","r") as menu:
         print(menu.read())
@@ -186,13 +181,12 @@ def main():
     time=datetime.now()
     print("SIPARISINIZ OLUSTURULMUSTUR! SIPARIS SAATI: {}".format(time))
 
-    with open(r"C:\Users\Nevra\Desktop\Order_Database.csv",'a',newline='') as database:
+    with open(r"C:\Users\Nevra\Desktop\Order_Database.csv",'a') as database:
         data=[pizza_name,pizza_description,pizza_cost,sause_name,sause_cost,total_cost,customer_name,custumer_id,card_num,card_password,time]
-        
         writer = csv.writer(database)
         writer.writerow(data)
 
-
+        
 
 if __name__ == "__main__":
     main()
